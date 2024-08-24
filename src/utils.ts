@@ -9,3 +9,18 @@ export function createCacheFolderIfNeeded() {
     });
   }
 }
+
+// Returns string representations of the doctype of the document
+export function serializeDoctypeToString(document: Document): string {
+  if (!document.doctype) {
+    return '';
+  }
+
+  // jsdom, or other dom-in-js implementation used might have issues, wrapping
+  // with try/catch to be on the safe side
+  try {
+    return new XMLSerializer().serializeToString(document.doctype);
+  } catch {
+    return '';
+  }
+}
