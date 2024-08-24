@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { CACHE_FOLDER } from './constants';
+import { serializeDoctypeToString } from './utils';
 
 export function debug(): void {
   if (!fs.existsSync(CACHE_FOLDER)) {
@@ -9,8 +10,8 @@ export function debug(): void {
     });
   }
 
-  fs.writeFileSync(
-    path.join(CACHE_FOLDER, 'index.html'),
-    document.documentElement.outerHTML,
-  );
+  const outHTML =
+    serializeDoctypeToString(document) + document.documentElement.outerHTML;
+
+  fs.writeFileSync(path.join(CACHE_FOLDER, 'index.html'), outHTML);
 }
